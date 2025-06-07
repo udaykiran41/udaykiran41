@@ -1,35 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta WEARFINITY="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Business Name</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header { background: #007BFF; color: white; padding: 20px; text-align: center; }
-    section { padding: 20px; }
-    footer { background: #333; color: white; text-align: center; padding: 10px; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Welcome to [wearfinity]</h1>
-    <p>We provide [clothing]</p>
-  </header>
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-  <section>
-    <h2>About Us</h2>
-    <p>We are a team of professionals offering [clothing]. Quality and customer satisfaction is our top priority.</p>
-  </section>
+void main() {
+  runApp(MyApp());
+}
 
-  <section>
-    <h2>Contact</h2>
-    <p>Email: uday20061122@gmail.com</p>
-    <p>Phone: +91-7981796122</p>
-  </section>
+class CartModel with ChangeNotifier {
+  final List<String> _items = [];
 
-  <footer>
-    &copy; 2025 [wearfinity]
-  </footer>
-</body>
-</html>
+  List<String> get items => _items;
+
+  void addItem(String item) {
+    _items.add(item);
+    notifyListeners();
+  }
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => CartModel(),
+      child: MaterialApp(
+        title: 'Mini Flipkart',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: ProductListScreen(),
+      ),
+    );
+  }
+}
